@@ -1095,3 +1095,16 @@ int mkrgb(struct palette *c)
 
     return red * 256 * 256 + green * 256 + blue;
 }
+
+static void print_palette_as_map(struct palette * pal, FILE * fh) {
+  for (int i = pal->start, j = 0; i <= pal->end && j <= pal->maxentries; i++, j++) {
+    fprintf(fh, "%d\t%d\t%d\n", palette->rgb[i][0], palette->rgb[i][1], palette->rgb[i][2]);
+  }
+}
+
+static void read_palette_from_map(struct palette * pal, FILE * fh) {
+  for (int i = pal->start, j = 0; i <= pal->end && j <= pal->maxentries &&
+    fscanf(fh, "%d\t%d\t%d\n", &palette->rgb[i][0], &palette->rgb[i][1], &palette->rgb[i][2]) != EOF;
+    i++, j++
+  ) {}
+}
